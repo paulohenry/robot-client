@@ -1,0 +1,256 @@
+/*----------animacao modal----------*/
+
+.ReactModal-Overlay .ReactModal-Overlay--after-open{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  inset: 0px;
+}
+.ReactModal__Content {
+  z-index: 99;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+.modal-open{
+  position: relative;
+  justify-self: center;
+  align-self: center;
+  max-height: 80vh;
+  min-width: 40vw;
+  max-width: 60vw;
+  margin-top: 8%;
+  margin-left: 22%;
+  margin-bottom: 10vh;
+  background: #FFF;    
+  border-radius: 2px;
+  outline: none; 
+  padding: 0px;
+  box-shadow: -3px -4px 7px 3px rgba(0, 0, 0, 0.2);   
+  animation-duration: 0.5s;
+  animation-name: slidein;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 
+      "modal-header"
+      "modal-body";
+}
+
+.modal-close{
+  position: relative;
+  
+  max-height: 80vh;
+  min-width: 40vw;
+  max-width: 60vw;
+  margin-top: 8%;
+  margin-left: 22%;
+  
+  background: #FFF;    
+  border-radius: 2px;
+  outline: none; 
+  padding: 0px;
+  box-shadow: -3px -4px 7px 3px rgba(0, 0, 0, 0.2);   
+  animation-duration: 0.5s;
+  animation-name: slideout;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 
+      "modal-header"
+      "modal-body";
+}
+@keyframes slidein {
+  from {
+    margin-top: 100%;   
+  }
+
+  to {
+    margin-top: 0%;   
+  }
+}
+
+@keyframes slideout {
+  from {
+    margin-top: 0%;   
+  }
+
+  to {
+    margin-top: 100%;   
+  }
+}
+/*-------------------organizando modal----------------------*/
+
+
+.header-modal{
+  
+  display: flex;
+  height: 40px;
+  justify-content: flex-start;
+  align-content: center;
+  grid-area: modal-header;
+  border-bottom: 1px solid black;
+}
+.header-modal .icon{
+  align-self: center;
+  margin-left:15px;
+  margin-right:30px;
+}
+.icon:hover{
+  cursor:pointer;
+}
+.header-modal div{
+  
+  font-size:24px;
+  font-weight: 500;
+  color:#C6C6C6;
+  
+}
+.inputs form  p{
+  margin-left:30px;
+  font-style: italic;
+}
+.inputs form input{
+  width:40vw;
+  padding:7px 0 7px 0px;
+  margin:5px 0px 15px 30px;
+  font-style: italic;
+}
+.plus-ex{
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+  margin-bottom: 5px;
+  padding:5px 10px 5px 10px;
+  background-color: var(--bg-color);
+  color: #FFF;
+  border:none;
+  border-bottom: 1px solid black;
+  border:none;
+  border-style: none;
+  cursor: pointer;
+}
+.plus-ex:active{
+  cursor:pointer;
+  background-color: #C2944A;
+  color:var(--icon-color)
+}
+.plus-ex:disabled{
+  background-color: #c4c4c4;
+}
+
+.rmvExample{
+  display: flex;
+  align-items: center;
+  justify-self: flex-end;
+  margin-left:auto;
+  margin-right: 0px;
+  padding:5px 10px 5px 10px;
+  background-color: var(--bg-color);
+  color: #FFF;
+  border:none;
+  border-bottom: 1px solid black;
+  border:none;
+  border-style: none;
+  cursor: pointer;
+}
+.rmvExample:active{
+  cursor:pointer;
+  background-color: #C2944A;
+  color:var(--icon-color)
+}
+.rmvExample:disabled{
+  background-color: #c4c4c4;
+}
+.body-modal{
+  
+  max-height: 80vh;
+  
+  
+  grid-area: modal-body;
+}
+.body-modal:first-child{
+  display: grid;
+  grid-template-columns: 1fr ;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 
+        "modal-body-inputs"
+        "modal-body-table";
+  
+  grid-area: modal-body;
+}
+
+.inputs{
+  padding-top:30px;
+  grid-area:modal-body-inputs;
+  background-color:#f4f4f4;
+}
+.tables{
+  width: 100%;
+  grid-area:modal-body-tables;
+
+}
+.modal-head-table{  
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr  1fr  ;
+  grid-template-rows: 1fr;
+  grid-template-areas: "checkbox context created conflict";
+  justify-content: center;
+  top:0;
+  left: 0;
+  background-color: #9e9d9d;
+}
+
+.modal-head-td-checkbox{  
+  grid-area:checkbox ;
+}
+
+.modal-head-td-intent{
+  grid-area:context ;
+}
+
+.modal-head-td-created{
+  grid-area:created ;
+}
+
+.modal-head-td-conflict{
+  grid-area:conflict ;
+}
+.modal-tbody{
+  background-color: #FFF;
+}
+.modal-tbody-tr{  
+  display: grid;
+  justify-content: center;
+  grid-template-columns:1fr 3fr 1fr  1fr   ;
+  border-bottom: 1px solid gray;
+  padding:10px 0px 10px 0px;
+  grid-template-rows: 1fr;
+  grid-template-areas: "checkbox context created conflict";
+}
+.modal-tbody-tr-td-checkbox{
+  justify-self: center;
+  align-self: center;
+  grid-area: checkbox;
+}
+.modal-tbody-tr-td-context{
+  justify-self: center;
+  align-self: center;
+  grid-area: context;
+}
+.modal-tbody-tr-td-created{
+  justify-self: center;
+  align-self: center;
+  grid-area: created;
+}
+.modal-tbody-tr-td-conflict{
+  justify-self: center;
+  align-self: center;
+  grid-area: conflict;
+}
+
+:root{
+  --bg-color:rgb(15,98,254);
+}

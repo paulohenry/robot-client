@@ -1,0 +1,149 @@
+.header-intents{  
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "texto remover adicionar";
+  
+}
+.text{ 
+  font-weight: bold; 
+  grid-area: texto;
+  display: flex;
+  padding: 0px 21.6% 0px 32%;
+  font-size: 25px;
+  justify-content: center;
+  align-items: center;  
+}
+
+
+.trash{  
+  grid-area: remover;
+  display: inline-flex;
+  background-color: var(--bg-color);
+  color:var(--icon-color); 
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0); 
+  justify-content: space-evenly;
+  align-items: center;   
+}
+.trash:active{
+  cursor:pointer;
+  background-color: #C2944A;  
+  color:var(--icon-color)
+}
+.trash:disabled{
+  background-color: #c4c4c4;
+}
+.trash:hover{
+  cursor:pointer;
+  background-color: #C2944A;  
+  color:var(--icon-color)
+}
+.td-hover:hover{
+  cursor: pointer;
+  background-color:green;
+}
+.check-input:hover{
+  cursor: pointer;
+}
+.plus{
+  grid-area: adicionar;
+  display: inline-flex;
+  background-color: var(--bg-color);
+  color:var(--icon-color); 
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0); 
+  justify-content: space-evenly;
+  align-items: center;  
+}
+.plus:active{
+  cursor:pointer;
+  background-color: #C2944A;
+  color:var(--icon-color)
+}
+.plus:hover{
+  cursor:pointer;
+  background-color: #C2944A;
+  color:var(--icon-color)
+}
+
+.conteudo-intents{
+    margin-top: 0px;
+    margin-left: 0px;
+    padding: 0px;
+}
+
+.head-table {
+  display: grid;
+  justify-self: center;
+  grid-template-columns: 5vw 25vw 15vw 15vw 15vw 10vw ;
+  grid-template-rows: 1fr;
+  background-color: #9e9d9d;
+  grid-template-areas: "checkbox intent description modified conflict example";
+  
+}
+.head-th-checkbox{
+  grid-area: checkbox;
+  justify-self: center;
+  align-self: center;
+}
+.head-th-intent{
+  grid-area: intent;
+  justify-self: center;
+  align-self: center;
+}
+.head-th-description{
+  grid-area: description;
+  justify-self: center;
+  align-self: center;
+}
+.head-th-modified{
+  grid-area: modified;
+  justify-self: center;
+  align-self: center;
+}
+.head-th-conflict{
+  grid-area: conflict;
+  justify-self: center;
+  align-self: center;
+}
+.head-th-example{
+  grid-area: example;
+  justify-self: center;
+  align-self: center;
+}
+.tbody-table{
+  display: grid;
+  grid-template-areas: 1fr;
+  grid-template-rows: 1fr;
+}
+.tbody-tr-conteudo{
+  display: grid;
+  grid-template-columns: 5vw 25vw 15vw 15vw 15vw 10vw  ;
+  grid-template-rows: 1fr;
+  background-color:#FFF;
+  grid-template-areas: "checkbox intent description modified conflict example";
+  border-bottom: 1px solid gray;
+  border-right: 1px solid gray;
+}
+.tbody-tr-conteudo td{
+  margin:2% 0% 2% 0%;
+  justify-self: center;
+  align-self: center;
+  
+}
+.tbody-tr-conteudo:hover{
+  background-color: var(--bg-color);
+  
+}
+.tbody-tr-conteudo .td-example{
+  margin-right: 1px;  
+}
+
+
+
+:root{
+  --bg-color:rgb(15,98,254);
+}

@@ -1,0 +1,117 @@
+.layout{
+  display: grid;
+  overflow-y: hidden;
+  grid-template-columns: 1fr 10fr;
+  grid-template-rows: 10vh 90vh;
+  grid-template-areas:
+    "voltar conteudo"
+    "lateral conteudo";
+} 
+header{
+  min-height: 0vh;
+  max-height: 10vh;
+}
+header p{
+  margin-left: 20%;
+}
+header img {
+  margin-right: 15px;
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+}
+.title{
+  font-size: 32px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+}
+
+.header-principal {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  grid-area: cabecalho;   
+  background-color: #FFF;   
+  box-shadow: 15px 7px 20px 4px rgba(0,0,0,0.1);
+  z-index: 1;
+}
+.voltar{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  grid-area: voltar;
+  color:var(--bg-color);
+  background-color: #FFF;
+  z-index: 2;
+}
+.voltar:hover{  
+  background-color: var(--bg-color);
+  color:#FFF;
+  z-index: 10;
+  transform: scale(1.15); 
+}
+aside {
+  display: grid;
+  box-shadow: 8px 10px 20px 6px rgba(0,0,0,0.1);
+  background-color: #FFF; 
+  grid-area: lateral;
+  grid-template-columns: 1fr  ;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-areas: 
+   "home"
+   "video" 
+   "intencoes" 
+   "entidades" 
+   "respostas";
+}
+aside div{
+  display: flex;
+  flex-direction: column;  
+  justify-content: center;
+  align-items: center; 
+  color:var(--bg-color);
+  background-color: #FFF;
+}
+aside .home{
+  grid-area:home
+}
+aside .intencoes{
+  grid-area:intencoes
+}
+aside .entidade{
+  grid-area:entidade
+}
+aside .resposta{
+  grid-area:resposta
+}
+aside .video{
+  grid-area:video
+}
+
+aside div:hover{
+  background-color: var(--bg-color);
+  color:#FFF;
+  z-index: 10;
+  transform: scale(1.15);  
+}
+main {
+  grid-area: conteudo;
+}
+.content-screens{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  
+}
+.content-screens .telas{
+margin:2% 0% 0% 2%;
+background-color: #FFF;
+height: 95vh;
+overflow-y: auto;
+overflow-x: auto;   
+
+}
+
+:root{
+    --bg-color:rgb(15,98,254);
+}
