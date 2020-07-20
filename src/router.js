@@ -1,8 +1,8 @@
 import React from 'react';
 import {BrowserRouter,Route,Switch}from 'react-router-dom'
-import Home from './Pages/Home/index'
-import TrainChat from './Pages/TrainChat/index'
-import TrainVision from './Pages/TrainVision/index'
+import Home from './Pages/Home/home'
+import TrainChat from './Pages/TrainChat/chat'
+import TrainVision from './Pages/TrainVision/vision'
 
 function Router() {
   return(

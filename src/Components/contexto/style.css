@@ -75,10 +75,10 @@
     padding: 0px;
 }
 
-.head-table {
+.tr-thead {
   display: grid;
   justify-self: center;
-  grid-template-columns: 5vw 25vw 15vw 15vw 15vw 10vw ;
+  grid-template-columns: 5vw 25vw 20vw 15vw 15vw 10vw ;
   grid-template-rows: 1fr;
   background-color: #9e9d9d;
   grid-template-areas: "checkbox intent description modified conflict example";
@@ -121,7 +121,7 @@
 }
 .tbody-tr-conteudo{
   display: grid;
-  grid-template-columns: 5vw 25vw 15vw 15vw 15vw 10vw  ;
+  grid-template-columns: 5vw 25vw 20vw 15vw 15vw 10vw  ;
   grid-template-rows: 1fr;
   background-color:#FFF;
   grid-template-areas: "checkbox intent description modified conflict example";

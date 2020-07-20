@@ -238,8 +238,9 @@ const Contexto = (props) =>{
              <FaRegPlusSquare size={40}/>
           </button>         
         </div>
-       
-        <thead className="head-table">          
+       <table>
+       <thead className="head-table">  
+        <tr className="tr-thead">   
             <th className="head-th-checkbox">
                <input
                  checked={false}
@@ -250,6 +251,7 @@ const Contexto = (props) =>{
             <th className="head-th-modified">Modificado em:</th>
             <th className="head-th-conflict">criado em:</th>
             <th className="head-th-example">exemplos:</th>          
+            </tr>     
         </thead>
       <tbody className="tbody-table">
       {callError?(
@@ -279,6 +281,8 @@ const Contexto = (props) =>{
           )
         })): <Loading/>}
       </tbody>  
+       </table>
+       
         
     </div>)}<Dialog 
                 open={openDialog} 

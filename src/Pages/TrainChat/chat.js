@@ -11,11 +11,11 @@ import {
 } from 'react-icons/fa'
 
 
-import Aprenda from '../../Components/aprenda/index'
-import Contexto from '../../Components/contexto/index'
-import Entidade from '../../Components/entidades/index'
-import Resposta from '../../Components/respostas/index'
-import Video from '../../Components/video/index'
+import Aprenda from '../../Components/aprenda/aprender'
+import Contexto from '../../Components/contexto/contexto'
+import Entidade from '../../Components/entidades/entidades'
+import Resposta from '../../Components/respostas/respostas'
+import Video from '../../Components/video/video'
 
 import {Link} from 'react-router-dom'
 

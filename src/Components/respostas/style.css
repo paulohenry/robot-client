@@ -1,0 +1,113 @@
+.header-response{  
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "texto remover adicionar";
+  
+}
+.text-response{ 
+  font-weight: bold; 
+  grid-area: texto;
+  display: flex;
+  padding: 0px 21.6% 0px 32%;
+  font-size: 25px;
+  justify-content: center;
+  align-items: center;  
+}
+.trash-response{  
+  grid-area: remover;
+  display: inline-flex;
+  background-color: var(--bg-color);
+  color:var(--icon-color); 
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0); 
+  justify-content: space-evenly;
+  align-items: center;   
+}
+.trash-response:active{
+  cursor:pointer;
+  background-color: #C2944A;  
+  color:var(--icon-color)
+}
+.trash-response:disabled{
+  background-color: #c4c4c4;
+}
+.trash-response:hover{
+  cursor:pointer;
+  background-color: #C2944A;  
+  color:var(--icon-color)
+}
+.td-hover-response:hover{
+  cursor: pointer;
+  background-color:green;
+}
+.check-input-response:hover{
+  cursor: pointer;
+}
+.plus-response{
+  grid-area: adicionar;
+  display: inline-flex;
+  background-color: var(--bg-color);
+  color:var(--icon-color); 
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0); 
+  justify-content: space-evenly;
+  align-items: center;  
+}
+.plus-response:active{
+  cursor:pointer;
+  background-color: #C2944A;
+  color:var(--icon-color)
+}
+.plus-response:hover{
+  cursor:pointer;
+  background-color: #C2944A;
+  color:var(--icon-color)
+}
+
+.table-response{
+  border:0px solid transparent;
+  border-collapse: collapse;  
+}
+
+.tr-thead-response{
+  display: grid;
+  grid-template-columns: 5vw 35vw 35vw 14vw;
+  grid-template-rows: 1fr;
+  grid-template-areas: "checkbox title conditions quantities";
+  background-color: #9e9d9d;
+  justify-self:center;
+}
+.th-check{
+  grid-area:checkbox
+ }
+.th-name{
+ grid-area:title
+}
+.th-condition{
+  grid-area:conditions
+}
+.th-quantities{
+  grid-area:quantities
+}
+.tbody-tr-conteudo-response{
+  display: grid;
+  grid-template-columns: 5vw 35vw 35vw 14vw;
+  grid-template-rows: 1fr;
+  background-color:#FFF;
+  grid-template-areas: "checkbox title condition quantities";
+  border-bottom: 1px solid gray;
+  border-right: 1px solid gray;
+}
+.tbody-tr-conteudo-response td{
+  margin:2% 0% 2% 0%;
+  justify-self: center;
+  align-self: center;
+  
+}
+.tbody-tr-conteudo-response:hover{
+  background-color: var(--bg-color);
+  
+}
