@@ -4,24 +4,24 @@ import './style.css'
 import {
   FaArrowAltCircleLeft,
   FaRegComments,
-  FaTheaterMasks,
+  FaQuestion,
   FaRobot,
   FaHome,
   FaYoutube
 } from 'react-icons/fa'
 
 
-import Aprenda from '../../Components/aprenda/aprender'
-import Contexto from '../../Components/contexto/contexto'
-import Entidade from '../../Components/entidades/entidades'
-import Resposta from '../../Components/respostas/respostas'
-import Video from '../../Components/video/video'
+import Aprenda from '../../Components/chat-components/aprenda/aprender'
+import Contexto from '../../Components/chat-components/contexto/contexto'
+import Entidade from '../../Components/chat-components/entidades/entidades'
+import Resposta from '../../Components/chat-components/respostas/respostas'
+import Video from '../../Components/chat-components/video/video'
 
 import {Link} from 'react-router-dom'
 
 function TrainChat () {    
     
-    const [select, setSelect]=useState('home')
+    const [select, setSelect]=useState('video')
    
   
   return(    
@@ -34,7 +34,7 @@ function TrainChat () {
                 className="home" 
                 onClick={()=>{setSelect('home')}}>
                   <FaHome size={25}/>
-                  <p>Aprenda</p>
+                  <p>Desempenho</p>
               </div>
               <div 
                 className="intencoes" 
@@ -45,8 +45,8 @@ function TrainChat () {
               <div 
                 className="entidades" 
                 onClick={()=>{setSelect('entidade')}}>
-                  <FaTheaterMasks size={25}/>
-                  <p>Entidades</p>
+                  <FaQuestion size={25}/>
+                  <p>Questões</p>
               </div>
               <div 
                 className="respostas" 
@@ -58,7 +58,7 @@ function TrainChat () {
                 className="video" 
                 onClick={()=>{setSelect('video')}}>
                   <FaYoutube size={25}/>
-                  <p>Video Aula</p>
+                  <p>Aprenda</p>
               </div>
             </aside>  
             <main>
@@ -71,7 +71,7 @@ function TrainChat () {
                   }
                   { select === 'respostas'&& <div className="telas"><Resposta/></div>
                   }
-                  { select === 'video'&& <div className="telas"><Video/></div>
+                  { select === 'video'&& <div className="telas-video"><Video/></div>
                   }
               </div>
                 

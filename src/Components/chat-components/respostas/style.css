@@ -111,3 +111,26 @@
   background-color: var(--bg-color);
   
 }
+.td-title:hover{
+    background-color: yellowgreen;
+    cursor: pointer;
+}
+.aviso{
+  border:1px solid black;
+  height:80vh;
+  width:88.7vw;
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  
+}
+.aviso button{
+  background-color:#0F62FE;
+  border: none;
+  color:white;
+  font-weight: bold;
+  padding:20px 40px;
+  border-radius: 4px;
+  box-shadow: 3px 3px 6px 1px rgba(0,0,0,0.5);
+}
+

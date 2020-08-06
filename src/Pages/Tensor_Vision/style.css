@@ -1,0 +1,77 @@
+.container-all{
+  display:grid;
+  height:100vh;
+  width:100vw;
+  grid-template-columns:1fr auto;
+  grid-template-rows: 1fr ;
+  grid-template-areas:"aside container";
+}
+
+.menu-vision {
+  display: grid;
+  box-shadow: 8px 10px 20px 6px rgba(0,0,0,0.1);
+  background-color: #FFF; 
+  grid-area: aside;
+  grid-template-columns: 1fr  ;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+   "voltar"
+   "home"
+   "video"
+   "entidades" 
+   "intencoes"     
+   "respostas";
+}
+.menu-vision div{
+  display: flex;
+  flex-direction: column;  
+  justify-content: center;
+  align-items: center; 
+  color:var(--bg-color);
+  background-color: #FFF;
+  cursor: pointer;
+}
+.voltar-vision{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  grid-area:voltar;
+  color:var(--bg-color);
+  text-decoration:none;
+}
+.menu-vision .home-vision{
+  grid-area:home
+}
+.menu-vision .intencoes-vision{
+  grid-area:intencoes
+}
+.menu-vision .entidade-vision{
+  grid-area:entidade
+}
+.menu-vision .resposta-vision{
+  grid-area:resposta
+}
+.menu-vision .video-vision{
+  grid-area:video
+}
+
+.menu-vision .voltar-vision div:hover{
+  background-color: var(--bg-color);
+  color:#FFF;
+  z-index: 1;
+  transform: scale(1.15);  
+}
+.voltar-vision:hover{
+  background-color: var(--bg-color);
+  color:#FFF;
+  z-index: 1;
+  transform: scale(1.15);  
+}
+
+.container{
+  display:flex;
+  padding:0;
+  margin:0;
+  grid-area:container;
+  
+}

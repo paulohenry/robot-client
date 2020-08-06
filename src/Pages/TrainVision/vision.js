@@ -27,7 +27,6 @@ class App extends Component{
      camState:false,
      image64:null,
      positive_colections:[],
-     negative_colections:[],
     }
   }
   
@@ -63,14 +62,12 @@ submitToTrain = ()=>{
     io.emit('submit_to_train', {
       label:this.state.label,
       positive_amostrage:this.state.positive_colections,
-      negative_amostrage:this.state.negative_colections
-    })  
+       })  
     this.setState({
       label:'',
       camState:false,
       image64:null,
       positive_colections:[],
-      negative_colections:[],
     })
   }
 
@@ -89,24 +86,6 @@ take_positive_pictures_minus = ()=>{
   novaLista.splice(this.state.positive_colections.length - 1, 1)
   this.setState({
     positive_colections:novaLista
-  })
- }
-}
-take_negative_pictures_plus = ()=>{
-  if(this.state.camState===true){
-    let novaLista = this.state.negative_colections
-    novaLista.push(this.state.image64)
-    this.setState({
-      negative_colections:novaLista
-    })
-   }
-}
-take_negative_pictures_minus = ()=>{
-  if(this.state.camState===true){
-  let novaLista = this.state.negative_colections
-  novaLista.splice(this.state.negative_colections.length - 1, 1)
-  this.setState({
-    negative_colections:novaLista
   })
  }
 }
@@ -162,35 +141,7 @@ return (
       {
         !this.state.positive_colections.length && <h3>sem foto na coleção</h3>
       }
-     </div>
-     <div>
-     <h1>coleção de amostras negativas para treinamento</h1>
-     <div>
-     <Button onClick={this.take_negative_pictures_plus}>     
-          <FaPlus color='#44c2d4' size={25}/>         
-        </Button> 
-        <Button onClick={this.take_negative_pictures_minus}>     
-          <FaMinus color='#44c2d4' size={25}/>         
-        </Button> 
-     </div>
-     <div>
-     <ContainerColection>
-      {this.state.negative_colections.map((item,index)=>{
-        return<Camera
-           key={index} 
-           src={`data:imagem/jpeg;base64,${item}`}/>
-        })
-      }
-     </ContainerColection>
-     
-     </div>
-     
-      {
-        !this.state.negative_colections.lenth &&  <h3>sem foto na coleção</h3>
-      }
-     </div>
-      
-     
+     </div>    
     </InteracaoStyles>
    </>
    )

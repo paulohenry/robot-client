@@ -1,6 +1,6 @@
 import React from 'react'
 import Lottie from 'react-lottie'
-import * as loading from '../../../Assets/animations/loading.json'
+import * as loading from '../../Assets/animations/loading.json'
 // import * as done from '../../../Assets/animations/done.json'
 
 const loadingOptions = {
@@ -27,7 +27,7 @@ const Loading = (props)=>{
       {/* {props.loading?( */}
         <Lottie 
           options={loadingOptions}
-          height={'70%'}
+          height={'100%'}
           width={'50%'}
           isStopped={false}
           isPaused={false}

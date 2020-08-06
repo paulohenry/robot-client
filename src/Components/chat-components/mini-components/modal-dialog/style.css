@@ -1,0 +1,226 @@
+/*----------animacao modal----------*/
+
+.ReactModal-Overlay .ReactModal-Overlay--after-open{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  inset: 0px;
+}
+.ReactModal__Content {
+  z-index: 99;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+.modal-open{
+  position: relative;
+  justify-self: center;
+  align-self: center;
+  max-height: 80vh;
+  min-width: 40vw;
+  max-width: 60vw;
+  margin-top: 8%;
+  margin-left: 22%;
+  margin-bottom: 10vh;
+  background: #FFF;    
+  border-radius: 2px;
+  outline: none; 
+  padding: 0px;
+  box-shadow: -3px -4px 7px 3px rgba(0, 0, 0, 0.2);   
+  animation-duration: 0.5s;
+  animation-name: slidein;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 
+      "modal-header"
+      "modal-body";
+}
+
+.modal-close{
+  position: relative;
+  
+  max-height: 80vh;
+  min-width: 40vw;
+  max-width: 60vw;
+  margin-top: 8%;
+  margin-left: 22%;
+  
+  background: #FFF;    
+  border-radius: 2px;
+  outline: none; 
+  padding: 0px;
+  box-shadow: -3px -4px 7px 3px rgba(0, 0, 0, 0.2);   
+  animation-duration: 0.5s;
+  animation-name: slideout;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 
+      "modal-header"
+      "modal-body";
+}
+@keyframes slidein {
+  from {
+    margin-top: 100%;   
+  }
+
+  to {
+    margin-top: 0%;   
+  }
+}
+
+@keyframes slideout {
+  from {
+    margin-top: 0%;   
+  }
+
+  to {
+    margin-top: 100%;   
+  }
+}
+/*-------------------organizando modal----------------------*/
+
+.container-modal{
+  
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 10fr;
+  grid-template-areas: 
+    "header header"
+    "form examples";
+  width:100%;
+  height:70vh;
+}
+.container-modal > div{
+  border-top: 1px solid black;
+  background-color:var(--primary);
+  height: 100%;
+  padding:30px;
+}
+header{
+  position: relative;
+  grid-area: header;
+
+}
+.form{
+  
+  grid-area: form;
+  border-right:1px solid black;
+}
+
+.container-modal header{
+  display:flex;
+  justify-content:left;
+  align-items: center;
+  width:100%;
+  padding-bottom: 10px;
+}
+.container-modal header div{
+  color:var(--secundary);
+  font-size: 27 px;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.arrow-left{
+  padding-top: 7px;
+  color:var(--bg-color);
+  margin:0px 20px;
+}
+.arrow-left:hover{
+  cursor: pointer;
+}
+.container-modal header {
+  border-bottom:3px solid var(--primary);
+}
+.addCondition:hover{
+  cursor: pointer;
+  
+}
+.addCondition{
+  justify-self: center;
+  align-self: center;
+  color:var(--bg-color);
+  padding:0px 10px;
+  background-color:transparent;  
+  border:none;
+}
+.addCondition:disabled{
+  justify-self: center;
+  align-self: center;
+  border:none;
+  padding:0px 5px;
+  background-color:transparent;  
+  color:var(--secundary);  
+}
+.icon-i{
+  padding-top:5px;
+}
+.e-ou{
+  margin-left:10px;
+}
+input{
+  padding:5px 10px 5px 0px;
+  width:60%;
+  margin-bottom:10px;
+  font-style: italic;
+}
+select{
+  padding:5px 12px 5px 0px;
+}
+.cadastrar-button{
+  position: absolute;
+  margin-top:1%;
+  top:80%;
+  left:45%;
+  display:flex;
+  justify-content:space-between;
+  border:none;
+  box-shadow: 3px 3px 1px 1px rgba(0,0,0,0.1);
+  background-color: var(--bg-color);
+  align-items: center;
+  padding:10px 10px;
+  color:white;
+  border-radius: 2px;
+}
+.icon-s{
+  margin-left:10px;
+}
+.cadastrar-button:hover{
+  cursor: pointer;
+}
+
+
+.addExample{
+  
+  justify-self: center;
+  display:flex;
+  justify-content:center;
+  margin:30px auto 0px auto;
+  align-items: center;
+  border:none;
+  box-shadow: 3px 3px 1px 1px rgba(0,0,0,0.1);
+  background-color: var(--bg-color);
+  
+  padding:10px 10px;
+  color:white;
+  border-radius: 2px;
+}
+.addExample:hover{
+  cursor: pointer;
+}
+.input-example{
+  margin:10px 0px 0px 10px;
+}
+.div-map{
+  display:flex;
+  align-items: center;
+}
+:root{
+  --bg-color:rgb(15,98,254);
+  --primary:#f4f4f4;
+  --secundary:#c4c4c4;
+}

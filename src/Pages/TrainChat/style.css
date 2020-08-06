@@ -59,9 +59,9 @@ aside {
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr ;
   grid-template-areas: 
    "home"
-   "video" 
-   "intencoes" 
+   "video"
    "entidades" 
+   "intencoes"     
    "respostas";
 }
 aside div{
@@ -71,6 +71,7 @@ aside div{
   align-items: center; 
   color:var(--bg-color);
   background-color: #FFF;
+  cursor: pointer;
 }
 aside .home{
   grid-area:home
@@ -96,6 +97,7 @@ aside div:hover{
 }
 main {
   grid-area: conteudo;
+  
 }
 .content-screens{
   display: grid;
@@ -104,13 +106,19 @@ main {
   
 }
 .content-screens .telas{
-margin:2% 0% 0% 2%;
-background-color: #FFF;
-height: 95vh;
-overflow-y: auto;
-overflow-x: auto;   
 
+background-color: #f4f4f4;
+height: 100vh;
+overflow-y: scroll; 
+overflow-x: hidden; 
 }
+.content-screens .telas-video{
+  
+  background-color: #f4f4f4;
+  height: 100vh;
+  overflow-y: scroll; 
+  overflow-x: scroll; 
+  }
 
 :root{
     --bg-color:rgb(15,98,254);

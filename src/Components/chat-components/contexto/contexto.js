@@ -1,16 +1,17 @@
 import React,{useEffect,useState,createRef} from 'react';
 import './style.css'
 
-import api from '../../Services/axios'
+import Checkbox from '@material-ui/core/Checkbox';
+import api from '../../../Services/axios'
 
 import { FaTrashAlt, FaRegPlusSquare} from 'react-icons/fa'
-import Loading from '../../Components/mini-components/loading/loading'
+import Loading from '../../loading/loading'
 
-import ModalComponent from '../../Components/mini-components/modal-intent/modal'
+import ModalComponent from '../mini-components/modal-intent/modal'
 import {parseISO,format,} from 'date-fns';
 import {stylesheet} from './stylesheet'
 
-import Dialog from '../../Components/mini-components/dialog/dialog'
+import Dialog from '../../dialog/dialog'
 
 const Contexto = (props) =>{
 
@@ -24,13 +25,7 @@ const Contexto = (props) =>{
   const [conteudoClickado, setConteudoClickado]=useState({})
   const [trash, setTrash]=useState(true);
   const [zerado, setZerado]=useState(false)
-  const[logs_de_alert, setLogs]=useState({
-    title:'',
-    body:'',
-    message1:'',
-    message2:'',
-    message3:'',
-  })
+  const[logs_de_alert, setLogs]=useState({})
 
   const getIntents = async()=>{
    
@@ -42,11 +37,11 @@ const Contexto = (props) =>{
       if(resposta.data.result.intents.length===0){
           setZerado(true)
           console.log('insira uma intenção para começar')
-      }else{setZerado(false) }
+      }else{
+      setZerado(false) }
       setContextos(newList)
       setLoading(false)
-      setCallError(false)
-      setLoading(false)
+      setCallError(false)      
     }catch(err){
       console.log(err)
       setCallError(true)
@@ -243,6 +238,7 @@ const Contexto = (props) =>{
         <tr className="tr-thead">   
             <th className="head-th-checkbox">
                <input
+               onChange={() =>{}}
                  checked={false}
                  type="checkbox"
             /></th>
@@ -255,21 +251,21 @@ const Contexto = (props) =>{
         </thead>
       <tbody className="tbody-table">
       {callError?(
-        <h1>Verifique sua internet ou backend e tente novamente</h1>
+        <div className="aviso">
+          <button>Verifique sua internet ou backend e tente novamente</button>
+        </div>
       ):
       !loading ?(contextos.map((conteudo,index,array)=>{
            
           return(
             <tr 
               className="tbody-tr-conteudo"
-             key={index}
-             >
+             key={index}>
                 <td>
-                  <input
-                    className="check-input"
+                <Checkbox
                     checked={conteudo.check}
                     onChange={(e)=>{selectCheck(e,conteudo,index,array)}}
-                    type="checkbox"
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
                   />
                 </td>
                 <td className="td-hover"onClick={() =>{openModal(conteudo)}}>{conteudo.intent}</td>
@@ -279,7 +275,11 @@ const Contexto = (props) =>{
                 <td className="td-example">{conteudo.examples.length}</td>
             </tr>
           )
-        })): <Loading/>}
+        })): 
+        <div className="aviso" onClick={()=>{getIntents()}}>
+          <Loading/>
+        </div>
+        }
       </tbody>  
        </table>
        
@@ -287,12 +287,13 @@ const Contexto = (props) =>{
     </div>)}<Dialog 
                 open={openDialog} 
                 onClose={()=>{setOpenDialog(false)}}
+                clickButton={()=>{setOpenDialog(false)}}
                 title={logs_de_alert.title}   
                 body={logs_de_alert.body}    
                 message1={logs_de_alert.message1} 
                 message2={logs_de_alert.message2} 
                 message3={logs_de_alert.message3}                  
-                />{zerado && <h1>Sem contextos, insira um contexto para começar</h1>}
+                />{zerado && <div className="aviso"><button>Sem contextos, insira um contexto para começar</button></div>}
     </>)
 }
 

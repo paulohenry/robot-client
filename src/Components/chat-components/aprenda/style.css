@@ -3,4 +3,5 @@
   padding: 0px;
   outline:0;
   box-sizing: border-box;
+  overflow-x:none;
 }

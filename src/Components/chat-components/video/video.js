@@ -1,7 +1,7 @@
 import React,{useEffect,useState,useRef} from 'react';
 import ReactPlayer from 'react-player'
-import Loading from '../../Components/mini-components/loading/loading'
-
+import Loading from '../../loading/loading'
+import fluxograma from '../../../Assets/fluxograma.png'
 
 function Video() {
   const play=useRef(null)
@@ -20,7 +20,9 @@ useEffect(()=>{
       style={{marginTop:50, marginLeft:'30%'}}
       url={`https://www.youtube.com/watch?v=KNAWp2S3w94&origin:http://Localhost:8080`}
       controls={true}
-    />{loading && <Loading         
+    />
+    <img src={fluxograma} alt="pdf"/>
+    {loading && <Loading         
       className="loading"
     />}
   </>

@@ -10,5 +10,6 @@ html,body, #root{
   display:block;
   background-color: #F4F4F4;
   min-height: 100%;
+  overflow-x:hidden;
   -webkit-font-smoothing: antialised !important;  
 }

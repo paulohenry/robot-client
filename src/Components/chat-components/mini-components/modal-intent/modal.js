@@ -1,12 +1,12 @@
 import React,{useEffect,useState,useRef} from 'react';
-
+import Checkbox from '@material-ui/core/Checkbox';
 import './style.css'
 import {stylesheet} from './stylesheet'
 import Modal from 'react-modal'
 import {FaLongArrowAltLeft,FaRegPlusSquare,FaTrashAlt} from 'react-icons/fa'
 import {parseISO, format} from 'date-fns'
-import Dialog from '../../mini-components/dialog/dialog'
-import api from '../../../Services/axios'
+import Dialog from '../../../dialog/dialog'
+import api from '../../../../Services/axios'
 
 
 Modal.setAppElement(document.getElementById('root'))
@@ -191,10 +191,10 @@ const removeExample = async()=>{
      }catch(err){
       handleAlert(
         'Ação nao permitida',
-        `Erro ao cadastrart novo exemplo`,
-        'verifique sua internet ou processo backend do robo',
-        'verifique se a intenção já esta cadastrada',
-        'Em caso de persistir o erro, entre em contato com suporte')  
+        `Erro ao cadastrar novo exemplo`,
+        `verifique sua internet ou processo backend do robo`,
+        `verifique se a intenção já esta cadastrada`,
+        `Em caso de persistir o erro, entre em contato com suporte`)  
      }
   }
   const handleCreateContext =async(e)=>{
@@ -215,7 +215,10 @@ const removeExample = async()=>{
         }catch(err){
           handleAlert(
             'Ação nao permitida',
-            `Erro ao cadastrart novo contexto`)  
+            `Erro ao cadastrar novo contexto`,
+            `verifique sua internet ou processo backend do robo`,
+        `verifique se a intenção já esta cadastrada`,
+        `o titulo da intenção aceita apenas letras ou numeros`)  
         }
       }
   }
@@ -223,7 +226,9 @@ const removeExample = async()=>{
       switch (e.currentTarget.id) {
         case 'contexto':
            if(props.onData.intent===undefined){
-             setIntent(e.currentTarget.value)
+             let target = e.currentTarget.value
+             let newValue = target.replace(" ", '_')
+             setIntent(newValue)
             }else{               
                 handleAlert(
                   'Ação não permitida',
@@ -369,12 +374,6 @@ const removeExample = async()=>{
                       </button>                  
                   <table className="tables">
                   <thead className="modal-head-table">          
-                    <th className="-modal-head-td-checkbox">
-                       <input
-                         checked={false}
-                         type="checkbox"
-                       />
-                    </th>
                     <th className="modal-head-td-intent">exemplos:</th>                   
                     <th className="modal-head-td-created">criado em:</th>
                     <th className="modal-head-td-conflict">atualizado em:</th>                             
@@ -383,13 +382,12 @@ const removeExample = async()=>{
                   {listArray && listArray.map((example,index,array)=>{
                     return(
                     <tr key={index} className="modal-tbody-tr">
-                      <td className="modal-tbody-tr-td-checkbox">{
-                       
-                      }
-                        <input 
-                          checked={example.check}
-                          onChange={(e)=>{setChecked(e,example,index, array)}}
-                          type="checkbox"/>
+                      <td className="modal-tbody-tr-td-checkbox">
+                      <Checkbox
+                        checked={example.check}
+                        onChange={(e)=>{setChecked(e,example,index, array)}}
+                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                      />
                       </td>  
                       <td className="modal-tbody-tr-td-context">{example.text}</td>     
                       <td className="modal-tbody-tr-td-created">{example.created}</td>    

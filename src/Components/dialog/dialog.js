@@ -15,7 +15,8 @@ export default function AlertDialog(props) {
      message3,
      open,
      onClose,
-     clickButton} = props
+     clickButton
+     } = props
     
   return (       
       <Dialog
@@ -35,7 +36,7 @@ export default function AlertDialog(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>          
-          <Button onClick={()=>props.onClose()} color="primary" autoFocus>
+          <Button onClick={clickButton} color="primary" autoFocus>
             OK
           </Button>
         </DialogActions>
