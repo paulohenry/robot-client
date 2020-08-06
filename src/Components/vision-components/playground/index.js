@@ -9,7 +9,7 @@ import * as tf from'@tensorflow/tfjs';
 import * as mobilenetModule from'@tensorflow-models/mobilenet';
 import * as knnClassifier from'@tensorflow-models/knn-classifier';
 
-import {ClassifierBar} from './style'
+
 
 let mobilenet=null;
 let classifier=null;
@@ -28,8 +28,8 @@ const PlayGroundComponent = (props)=> {
   const camRef=useRef()
   const camRefTest=createRef()
   const [TestModelCam, setTestModelCam]=useState(false)
-  const [t, st]=useState(false)
-
+  const [testok, setTestok]=useState(false)
+  const [predict, setPredict]=useState(null)
 
   const load_files = async()=>{
      classifier = knnClassifier.create()
@@ -45,8 +45,8 @@ const PlayGroundComponent = (props)=> {
 
 
   const addClasse=()=>{
-    if(classesList.length>=4){
-      console.log('nao pode mais que 2')
+    if(classesList.length>=999){
+      console.log('nao pode mais que 999')
     }else{     
        
         setClasses(s=>[...s, {
@@ -254,13 +254,16 @@ const PlayGroundComponent = (props)=> {
      
     const img =  tf.browser.fromPixels(camRefTest.current.video)
     const  xlogits = mobilenet.infer(img,'conv_preds');
-    const predict = await classifier.predictClass(xlogits)
-    console.log('Predição:',predict);
-      }else{ clearInterval(interval)}
-  }
+    const predict1 = await classifier.predictClass(xlogits)
     
-   const TestModelFunc = ()=>{
-     interval=setInterval(test,1000) 
+    console.log('Predição:',predict1);
+      }else{
+         clearInterval(interval)
+        }
+  }
+  
+   const TestModelFunc = ()=>{         
+      interval=setInterval(test,1000)      
    }     
     
     const openCamTest = ()=>{
@@ -367,13 +370,13 @@ const PlayGroundComponent = (props)=> {
                       
           </div>
           <div className="container-test">
-            {TestModelCam ? (
-              <>
-             <div className="div-test">
-             <button className="b1" onClick={()=>{TestModelFunc()}}>
-                Iniciar Teste
+            {TestModelCam && 
+                <>
+              <div className="div-test">
+              <button className="b1" onClick={()=>{TestModelFunc()}}>
+                  Iniciar Teste
               </button>
-            <Webcam
+              <Webcam
               className="camera-de-teste"
               screenshotFormat = "image/jpeg"
               ref={camRefTest}
@@ -381,24 +384,13 @@ const PlayGroundComponent = (props)=> {
               videoConstraints={constrains}>
                 <p>fechar</p>
               </Webcam>
-              {Object.keys(classifier.classDatasetMatrices).map((c,index)=>{
-                return(
-                   <div key={index} className="classifier-name">
-                      <p>{c}</p>  
-                      <ClassifierBar 
-                        percentPrevision={30}
-                        colorBack={()=>{getRandomColor()}}/>                    
-                   </div>
-                )
-              })}
-             </div>
-              </>
-              ):(
-              <button className="b1"onClick={()=>{openCamTest()}}> 
-              Abrir camera de teste
-            </button>
-              )
+               <p>{predict===null?'sem classificação':`${predict.label}`}</p>
+             </div>            
+            </>              
             }
+             <button className="b2"onClick={()=>{openCamTest()}}> 
+             {!TestModelCam? 'Abrir camera de teste':'Fechar'}
+            </button>
           
           </div>
         
