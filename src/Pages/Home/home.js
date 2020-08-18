@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './style.css'
-
+import axios from '../../Services/axios'
 import {
   FaEye,
   FaRegComments,
@@ -11,7 +11,16 @@ import {
 import {Link} from 'react-router-dom'
 
 function Home() { 
+  const ckeckTag = ()=>{
+    try{
+        
+    }catch(error){
 
+    }
+  }
+   useEffect(()=>{
+    ckeckTag()
+   },[])
   return (
       <div className="conteudo">
         <Link className="content-vision" to="/vision"><FaEye size={100}></FaEye ><p className="text">visão computacional</p></Link>

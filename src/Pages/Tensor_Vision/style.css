@@ -73,5 +73,21 @@
   padding:0;
   margin:0;
   grid-area:container;
-  
+ 
+}
+.videos{
+  display: flex;
+  justify-content:center;
+  flex-direction: column;
+}
+.aprender{
+  height:100vh;
+  width:90vw;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f4f4f4;
+  overflow-y: scroll; 
+  overflow-x: hidden; 
 }

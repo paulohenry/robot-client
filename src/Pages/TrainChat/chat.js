@@ -67,7 +67,7 @@ function TrainChat () {
                   }
                   { select === 'contexto' && <div className="telas"><Contexto/></div>
                   }
-                  { select === 'entidade' && <div className="telas"><Entidade/></div>
+                  { select === 'entidade' && <div className="telas"><Entidade className="maintenance"/></div>
                   }
                   { select === 'respostas'&& <div className="telas"><Resposta/></div>
                   }

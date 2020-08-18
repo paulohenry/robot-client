@@ -154,6 +154,9 @@
 .b1:hover{
   cursor: pointer
 }
+.b1:disabled{
+  background-color:rgba(100, 102, 105, 0.7);
+}
 
 .card-train{
   border-radius:6px;
@@ -325,6 +328,7 @@
   align-self:center;
 }
 .div-test{
+  position:relative;
   display:flex;
   flex-direction: column;
   justify-content: center;
@@ -332,7 +336,51 @@
   border-radius: 4px;
   box-shadow:3px 3px 3px rgba(0,0,0,0.1)
 }
+.tf{
+  display:flex;
+  width:400px;
+  height:200px;
+  position:absolute;
+  left:-1000;
+  top:-1000;
+  
+}
+.titlePredict{
+  position:absolute;
+  left:13vw;
+  top:-10vh;
+
+}
+.enviar-sofia-disable{
+  background-color:rgba(102, 102, 102, 0.7);
+  padding:10px 20px;
+  border:none;
+  color:#fff;
+  font-size:32px;
+  font-weight: bold;
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+}
+.enviar-sofia-enable{
+  background-color:rgba(0,100,255,0.7);
+  padding:10px 20px;
+  border:none;
+  color:#fff;
+  font-size:32px;
+  font-weight: bold;
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+}
+.enviar-sofia-enable:hover{
+  cursor:pointer;
+  background-color:rgba(8, 95, 226, 0.7);
+}
 .escondido{
   z-index:10
+}
+.div-loading{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  height:100vh;
+  width:100vw;
 }
 

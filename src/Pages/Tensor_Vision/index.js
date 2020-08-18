@@ -11,7 +11,9 @@ import {
   FaYoutube
 } from 'react-icons/fa'
 import Playground from '../../Components/vision-components/playground/index'
-
+import Entidade from '../../Components/chat-components/entidades/entidades'
+import Aprender from '../../Components/vision-components/aprenda/aprender'
+import Videos from '../../Components/vision-components/video/video'
 const Tensor_Vision=(props)=> {
   
   const [select, setSelect]=useState('video')
@@ -30,19 +32,19 @@ const Tensor_Vision=(props)=> {
               </div>
               <div 
                 className="intencoes-vision" 
-                onClick={()=>{setSelect('contexto')}}>
+                onClick={()=>{setSelect('vision')}}>
                   <FaEye size={25}/>
                   <p>Treinar visão</p>
               </div>
               <div 
                 className="entidades-vision" 
-                onClick={()=>{setSelect('entidade')}}>
+                onClick={()=>{setSelect('questoes')}}>
                   <FaQuestion size={25}/>
                   <p>Questões</p>
               </div>
               <div 
                 className="respostas-vision" 
-                onClick={()=>{setSelect('respostas')}}>
+                onClick={()=>{setSelect('algoritms')}}>
                   <FaRobot size={25}/>
                   <p>Crie Algoritmos</p>
               </div>
@@ -54,15 +56,15 @@ const Tensor_Vision=(props)=> {
               </div>
           </aside >        
           <div className="container">
-                  { select === 'home' && <Playground/>
+                  { select === 'home' && <Aprender className="aprender"/>
                   }
-                  { select === 'contexto' && <Playground/>
+                  { select === 'vision' && <Playground className="maintenance"/>
                   }
-                  { select === 'entidade' && <Playground/>
+                  { select === 'questoes' && <Entidade className="maintenance"/>
                   }
-                  { select === 'respostas'&& <Playground/>
+                  { select === 'algoritms'&& <Entidade className="maintenance"/>
                   }
-                  { select === 'video'&& <Playground/>
+                  { select === 'video'&& <Videos className="videos"/>
                   }
           </div>
    </div>

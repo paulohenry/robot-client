@@ -1,14 +1,14 @@
 import React,{useState,createRef,useRef,useEffect} from 'react';
 import Webcam from 'react-webcam'
-
+import Dialog  from '../../../Components/dialog/dialog'
 import { FaTrashAlt, FaCameraRetro} from 'react-icons/fa'
 import {FiX, FiCamera} from 'react-icons/fi'
 import  './style.css';
-
+import Loading from '../../loading/loading'
 import * as tf from'@tensorflow/tfjs';
 import * as mobilenetModule from'@tensorflow-models/mobilenet';
-import * as knnClassifier from'@tensorflow-models/knn-classifier';
-
+import * as knnClassifier from'@tensorflow-models/knn-classifier/dist/knn-classifier';
+import Reactotron from 'reactotron-react-js'
 
 
 let mobilenet=null;
@@ -24,49 +24,92 @@ const constrains={
 
 const PlayGroundComponent = (props)=> {
 
-  const [classesList, setClasses] = useState([])
-  const camRef=useRef()
+  const camRef=useRef() 
+  const enviarSofia=createRef()
   const camRefTest=createRef()
+  const [classesList, setClasses] = useState([])
+  const [disabledButton,setDisabledButton]=useState(true)
   const [TestModelCam, setTestModelCam]=useState(false)
-  const [testok, setTestok]=useState(false)
-  const [predict, setPredict]=useState(null)
+  const [predictClass, setPredictClass]=useState(null)
+  const[openDialog, setOpenDialog]=useState(false)
+  const[loading,setLoading]=useState(true)
+  const[logs_de_alert, setLogs]=useState({
+    title:'',
+    body:'',
+    message1:'',
+    message2:'',
+    message3:'',
+
+  })
 
   const load_files = async()=>{
-     classifier = knnClassifier.create()
-     mobilenet = await mobilenetModule.load({
-       version:2,
-       alpha:1.0
-     })
-    console.log('carregou', mobilenet,classifier)
+    mobilenet = await mobilenetModule.load({
+      version:2,
+      alpha:1.0
+    })    
+    
+    const dataSetKNN = JSON.parse(localStorage.getItem('dataSetKNN'))
+    if(!dataSetKNN){
+      classifier = knnClassifier.create()
+      localStorage.setItem('dataSetKNN',[JSON.stringify([])])
+    }else{
+       classifier = knnClassifier.create()
+       const datasetJson = localStorage.getItem('dataSetKNN');
+       const datasetObj = JSON.parse(datasetJson);
+      const dataset = fromDatasetObject(datasetObj);
+     classifier.setClassifierDataset(dataset); 
+     console.log(classifier)       
   }
-  useEffect(()=>{
-    load_files()   
-  },[])
+    localMemory()
+    setLoading(false)  
+}
 
+  const localMemory = ()=>{
+    const localClassesSave = localStorage.getItem('classesList')     
+    if(!localClassesSave){
+    localStorage.setItem('classesList', [JSON.stringify([])])
+     }else{
+       const local2= JSON.parse(localStorage.getItem('classesList'))
+      setClasses(local2)  
+    }
+  }
+  
+  useEffect(()=>{load_files()},[])
+  useEffect(()=>{
+    const interval = setInterval(()=>{
+      test()
+    },1000) 
+    return ()=> clearInterval(interval)       
+ },[predictClass])
+  
 
   const addClasse=()=>{
-    if(classesList.length>=999){
-      console.log('nao pode mais que 999')
+    if(classesList!==null && classesList.length>=100){
+      handleAlert('Aviso','não pode criar mais que 100 classes')      
     }else{     
-       
         setClasses(s=>[...s, {
          title:'',
          countAmostrage:0,
          openCam:false,
-         amostrage:[],
-         
-         }
+         amostrage:[],         
+         }        
         ])        
+        
       }    
   }
-  const getRandomColor = ()=> {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
+ const handleAlert=(
+  title='seu titulo',body='seu corpo',message1='',message2='',message3='')=>{
+   setLogs({
+      title:title,
+      body:body,
+      message1:message1,
+      message2:message2,
+      message3:message3,
+      }) 
+    setOpenDialog(true)    
+ 
+}
+
   const openCamera = (clique)=>{ 
     console.log(clique)
           const newList=[]         
@@ -142,7 +185,7 @@ const PlayGroundComponent = (props)=> {
         const newList=[]
         console.log(clique)
         classesList.filter((c_,index_)=>{
-          if(index_!==clique){
+          if(index_!==clique){            
             return(
                newList.push({
                 title:c_.title,
@@ -151,9 +194,17 @@ const PlayGroundComponent = (props)=> {
                 amostrage:c_.amostrage
                })
             )
+          }else{
+            
+             if(classifier.getNumClasses()>0){
+               classifier.clearClass(c_.title)               
+             }
+            console.log(classifier)
           }       
         })
-         
+         if(newList.length===0){
+           
+         }
         setClasses(newList)
     }
 
@@ -186,21 +237,21 @@ const PlayGroundComponent = (props)=> {
         })
         setClasses(newList)
     }
-    const addAmostrages = (clique)=>{    
+    const addAmostrages = async(clique)=>{    
       console.log(clique)  
       const newList = []
-      classesList.map((c_,index_)=>{        
+      classesList.map(async(c_,index_)=>{        
           newList.push({
             title:c_.title,
             countAmostrage:c_.countAmostrage,
             openCam:c_.openCam,
             amostrage:c_.amostrage
           })
-         if(clique===index_){          
+         if(clique===index_){   
+         
           const img =  tf.browser.fromPixels(camRef.current.video)
           const logits_img =  mobilenet.infer(img, 'conv_preds')
           classifier.addExample(logits_img, classesList[clique].title)
-          console.log(classifier,img,logits_img)
           const screenShot = camRef.current.getScreenshot({width: 400, height: 200})
           let screenShot_64= null;
           if(screenShot.includes('data:image/jpeg;base64,')){
@@ -210,12 +261,13 @@ const PlayGroundComponent = (props)=> {
             screenShot_64=bar_resolve
           }
           
-          if(classesList[clique].amostrage.length===100){
+          if(classesList[clique].amostrage.length===30){
             console.log('nao é possivel adicionar mais de 30 amostras')
           }else{
           newList[clique].amostrage.push({screenShot:screenShot_64})
           newList[clique].countAmostrage = newList[clique].amostrage.length
           setClasses(newList)
+          localStorage.setItem('classesList', JSON.stringify(classesList))
          }
         }
       })       
@@ -244,47 +296,106 @@ const PlayGroundComponent = (props)=> {
             newClassesList[index].countAmostrage=newAmostras.length
             
             setClasses(newClassesList)
-            console.log('indice da imagem',index_images,'indice da classe', index,'a classe aberta', classe )
-
+            localStorage.setItem('classesList', JSON.stringify(classesList))
     }
-   
-    const test = async()=>{      
-      const screenShot_64= null;
-      if(camRefTest.current!==null){
-     
+    const toDatasetObject = (dataset)=>{
+      const result = Object.entries(dataset).map(([classId,value], index) => {
+          const data = value.dataSync();    
+          return {
+            classId: classId,
+            data: Array.from(data),
+            shape: value.shape
+          };
+       })    
+      return result;
+    };
+    const fromDatasetObject = (datasetObject)=>{
+      let res =  Object.entries(datasetObject).reduce((result, [_, {classId, data, shape}]) => {
+        const tensor = tf.tensor2d(data, shape);
+        result[classId] = tensor;  
+        console.log('interacao',datasetObject)
+        console.log(result)
+        return result;
+      }, {})     
+      return res    
+    }
+
+  const enviarParaSofhia = ()=>{
+    if(classesList.length>0){
+      if(classesList[0].countAmostrage > 0){
+        try{
+          localStorage.setItem('classesList', JSON.stringify(classesList))
+
+          const dataset = classifier.getClassifierDataset();
+          const datasetOjb = toDatasetObject(dataset);
+          const jsonStr = JSON.stringify(datasetOjb);
+          localStorage.setItem('dataSetKNN', jsonStr);
+          console.log(classifier)      
+          clearInterval(interval)
+          handleAlert('Aviso','Enviado com sucesso')    
+          setTestModelCam(false)          
+          setPredictClass('')
+
+        }catch(error){
+          console.log(error)
+          handleAlert('Aviso','Não foi possivel concluir a açao',
+          'verifique sua internet','verifique o processo de backend do robo',
+          'ou entre em contato com o suporte')
+        }            
+      }else{
+       handleAlert('Aviso','inclua amostras na sua classe',
+       'após abrir a camera de testes e testar', 'enviar para a sofhia')
+      }      
+    }else{
+      handleAlert('Aviso','Você deve criar uma classe antes')      
+    }
+   }
+
+    const test = async()=>{     
+      if(camRefTest.current!==null){   
+      
     const img =  tf.browser.fromPixels(camRefTest.current.video)
     const  xlogits = mobilenet.infer(img,'conv_preds');
-    const predict1 = await classifier.predictClass(xlogits)
-    
-    console.log('Predição:',predict1);
+    try{
+      const predict1 = await classifier.predictClass(xlogits)
+      setPredictClass(predict1.label)
+      console.log(predict1.label)
+    }catch(error){console.log(error)}
+        
       }else{
-         clearInterval(interval)
-        }
+        setPredictClass('')
+        clearInterval(interval)
+        
+      }
   }
-  
-   const TestModelFunc = ()=>{         
-      interval=setInterval(test,1000)      
-   }     
-    
+
     const openCamTest = ()=>{
       if(classesList.length>0){
         if(classesList[0].countAmostrage > 0){
           if(TestModelCam===false){
             setTestModelCam(true)
              
+               setDisabledButton(false)
+            
           }else{
             setTestModelCam(false)
             clearInterval(interval)
+            setPredictClass('')
+            setDisabledButton(true)
           }
         }else{
-          console.log('inclua amostras na sua classe')
+         handleAlert('Aviso','inclua amostras na sua classe',
+         'após abrir a camera de testes e testar', 'enviar para a sofhia')
         }      
       }else{
-      console.log('Você deve criar uma classe antes')
+        handleAlert('Aviso','Você deve criar uma classe antes')      
      }
     }
   return (
-        <div className="container">
+    <>
+       {!loading? (
+         <>
+          <div className="container">
             <div className="container-cards">
               {classesList && classesList.map((classe,index,array)=>{
                 return(
@@ -336,7 +447,7 @@ const PlayGroundComponent = (props)=> {
                                 className="input-class"               
                                 value={classe.title} 
                                 onChange={(e)=>{inputChanged(e,index,array)}}/>  
-                              <FiCamera onMouseDown={()=>{addAmostrages(index)}} className="icon-add-cam"/>                              
+                              <FiCamera onMouseDown={async()=>{await addAmostrages(index)}} className="icon-add-cam"/>                              
                             </header>
                             <div className="body-amostrage">
                                 {classe.amostrage?(
@@ -366,14 +477,16 @@ const PlayGroundComponent = (props)=> {
               })}
               <button className="add-card" onClick={()=>{addClasse()}}>adicionar classe</button>
             </div>
-          <div className="container-train">
-                      
+          <div ref={enviarSofia}className="container-train">
+          <button onClick={()=>enviarParaSofhia()}className='enviar-sofia-enable'>
+                  Enviar para sofhia
+              </button>
           </div>
           <div className="container-test">
             {TestModelCam && 
                 <>
               <div className="div-test">
-              <button className="b1" onClick={()=>{TestModelFunc()}}>
+              <button disabled={disabledButton} className="b1" onClick={()=>{test()}}>
                   Iniciar Teste
               </button>
               <Webcam
@@ -384,17 +497,34 @@ const PlayGroundComponent = (props)=> {
               videoConstraints={constrains}>
                 <p>fechar</p>
               </Webcam>
-               <p>{predict===null?'sem classificação':`${predict.label}`}</p>
+               <h1 className="titlePredict">{predictClass===null?'':`${predictClass}`}</h1>
              </div>            
             </>              
             }
-             <button className="b2"onClick={()=>{openCamTest()}}> 
+             <button className={classesList===null?'enviar-sofia-disable':'enviar-sofia-enable'}
+             onClick={()=>{openCamTest()}}> 
              {!TestModelCam? 'Abrir camera de teste':'Fechar'}
             </button>
           
           </div>
         
-        </div>     
+        </div>
+        <Dialog
+        open={openDialog} 
+        onClose={()=>{setOpenDialog(false)}}
+        clickButton={()=>{setOpenDialog(false)}}
+        title={logs_de_alert.title}   
+        body={logs_de_alert.body}    
+        message1={logs_de_alert.message1} 
+        message2={logs_de_alert.message2} 
+        message3={logs_de_alert.message3}   
+        />
+        </>
+       ):(
+       <div className="div-loading">
+         <Loading/>
+        </div>) 
+        }</>
   );
 }
 

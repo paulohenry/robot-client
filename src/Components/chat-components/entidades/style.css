@@ -1,0 +1,15 @@
+.maintenance{
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  flex-direction: column;
+  height:100vh;
+  width:100vw;
+    
+  overflow:hidden;
+}
+.maintenance img{
+  margin-top:3%;
+  height: 50%;
+  width:50%;
+}

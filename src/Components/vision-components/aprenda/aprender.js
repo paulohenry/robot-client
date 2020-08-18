@@ -1,6 +1,7 @@
 import React from 'react';
 import {Polar} from 'react-chartjs-2'
 
+
 const data = {
   datasets: [{
     data: [
@@ -27,8 +28,8 @@ const data = {
     'Interação com Sofhia'
   ]
 };
-function Aprenda() {
-  return  <div>   
+function Aprenda(props) {
+  return  <div className={props.className}>   
     <Polar data={data}/>
   </div>
 }
