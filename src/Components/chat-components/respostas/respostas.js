@@ -1,14 +1,14 @@
 import React,{useState,useEffect,useRef,createRef} from 'react';
 import './style.css'
 import { FaTrashAlt, FaRegPlusSquare} from 'react-icons/fa'
-import api from '../../../Services/axios'
+import axios from 'axios'
 import Loading from '../../loading/loading'
 import ModalDialog from '../mini-components/modal-dialog/modal-dialog'
 import Dialog from '../../dialog/dialog'
 import Checkbox from '@material-ui/core/Checkbox'
 
 const Respostas = (props)=> {
-  
+  const [zerado, setZerado]=useState(false)
   const [dialog, setdialog]=useState([])
   const [loading, setLoading]=useState(false)
   const [trash, setTrash]=useState(true)
@@ -80,12 +80,24 @@ const handleAlert = (title,body,m1,m2,m3)=>{
   const getdialog = async()=>{    
     setLoading(true)    
       try{
-        const res = await api.get('list-dialog')
+        const {
+          ibm_api_key, 
+          ibm_url ,
+          ibm_skill_id
+        } = JSON.parse(localStorage.getItem('userDatas'))
+        const ip = JSON.parse(localStorage.getItem('ipconfig'))
+        const res = await axios.post(`${ip}/list-dialog`,{
+          ibm_api_key, 
+          ibm_url ,
+          ibm_skill_id
+        })
         const formatedArray = formatedList(res.data.result.dialog_nodes)        
         setdialog(formatedArray)
         console.log('teste',formatedArray, dialog)
-        setLoading(false)         
+        setLoading(false) 
+        setZerado(false)        
       }catch(error){
+        setZerado(true)
         setLoading(false)
         setAviso(`
         nao foi possivel recuperar as informações 
@@ -147,8 +159,17 @@ const removerDialogo = async()=>{
     
     if(selectedItem[0].dialog_node){
       try{
-      console.log('item selecionado', selectedItem)      
-         const deleteItem = await api.post('delete-dialog',{
+        const {
+          ibm_api_key, 
+          ibm_url ,
+          ibm_skill_id
+        } = JSON.parse(localStorage.getItem('userDatas'))
+      console.log('item selecionado', selectedItem)  
+         const ip = JSON.parse(localStorage.getItem('ipconfig'))    
+         const deleteItem = await axios.post(`${ip}/delete-dialog`,{
+          ibm_api_key, 
+          ibm_url ,
+          ibm_skill_id,
           dialog_node:selectedItem[0].dialog_node
         })
         console.log(deleteItem)
@@ -288,9 +309,8 @@ useEffect(()=>{
             body={log_message.body}
             message1={log_message.message1}
             message2={log_message.message2}
-            message3={log_message.message3}
-            
-            />    
+            message3={log_message.message3}            
+            />{zerado && <div className="aviso"><button>Sem contextos, insira um contexto para começar</button></div>}    
       </>)
 }
 

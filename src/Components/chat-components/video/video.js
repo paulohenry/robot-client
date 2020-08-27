@@ -18,7 +18,7 @@ useEffect(()=>{
     <ReactPlayer    
       ref={play}
       style={{marginTop:50, marginLeft:'30%'}}
-      url={`https://www.youtube.com/watch?v=KNAWp2S3w94&origin:http://Localhost:8080`}
+      url={`https://www.youtube.com/watch?v=KNAWp2S3w94&origin:http://localhost:8080`}
       controls={true}
     />
     <img src={fluxograma} alt="pdf"/>

@@ -28,7 +28,7 @@ const Loading = (props)=>{
         <Lottie 
           options={loadingOptions}
           height={'100%'}
-          width={'50%'}
+          width={'100%'}
           isStopped={false}
           isPaused={false}
           className={props.className}

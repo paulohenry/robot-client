@@ -1,19 +1,26 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 import './style.css'
-
+import {useHistory} from 'react-router-dom'
 import {FaArrowAltCircleLeft} from 'react-icons/fa'
 import Dialog  from '../../Components/dialog/dialog'
-import axios from '../../Services/axios'
+import axios from 'axios'
 
 const ConfigPage = ()=>{
 
-
+  const history = useHistory()
   const [ipValue,setIpValue]=useState('')
   const [tagValue,setTagValue]=useState('')
   const[openDialog, setOpenDialog]=useState(false)
   const inputref=useRef()
   const inputref2=useRef()
   const[logs_de_alert, setLogs]=useState({})
+
+  useEffect(()=>{
+    const {tag_camera} = JSON.parse(localStorage.getItem('userDatas'))
+    setTagValue(tag_camera)
+      const ip = JSON.parse(localStorage.getItem('ipconfig'))
+      setIpValue(ip)
+  },[])
 
   const salvarIp = async(e)=>{
       e.preventDefault()
@@ -35,15 +42,34 @@ handleAlert('Ação bem sucedida', 'dados salvos com sucesso' )
   const salvarTag = async(e)=>{
     e.preventDefault()
     try{
-    console.log(inputref2.current.value)
-    const data2 = inputref2.current.value
-    localStorage.setItem('image_tag', data2)
-    console.log(localStorage.getItem('image_tag'))
-    
-    const res = await axios.post('/image_tag', {image_tag:data2})
+    const data2 = inputref2.current.value 
+    const register = JSON.parse(localStorage.getItem('userDatas'))
+      
+    const res = await axios.put(`${ipValue}/imagesTags`, {
+      tag_camera:data2,
+      ra:register.ra
+    })
+     console.log(res)
+    const register2 = {
+      nome_aluno:register.nome_aluno,
+      ra:register.ra,
+      ibm_api_key:register.ibm_api_key,
+      ibm_url:register.ibm_url,
+      ibm_assistant_id:register.ibm_assistant_id,
+      ibm_session_id:register.ibm_session_id,
+      ibm_skill_id:register.ibm_skill_id,
+      nome_robot:register.nome_robot,
+      image_robot:register.image_robot,
+      image_aluno:register.image_aluno,
+      tag_camera:res.data.data,
+      tags_motors:register.tags_motors,
+      toggle_name_robot:register.toggle_name_robot,      
+    } 
+    localStorage.setItem('userDatas', JSON.stringify(register2))
     console.log(res)
     handleAlert('Ação bem sucedida', 'dados salvos com sucesso', 'você já pode iniciar seus estudos', )
     }catch(error){
+      console.log(error)
       handleAlert('Ação mal sucedida', 
       'erro ao tentar salvar',
       'verifique sua internet',
@@ -76,18 +102,18 @@ const handleAlert=(
 
   return(
     <div className="containerConfig">
-      <a href="/">
-        <button className="conf-buttonVoltar">
+    
+        <button className="conf-buttonVoltar" onClick={()=> history.push('/home')}>
           <FaArrowAltCircleLeft size={62}/>
-        </button>
-      </a>
-      <h1>Insira os dados de configuração antes de começar</h1>
+        </button >
+     
+      <h1 className="h1-title">Aqui você pode alterar algumas configurações</h1>
       <form className="formConfig" onSubmit={(e)=>{salvarIp(e)}}>
         <input className="inputConfig" ref={inputref} 
           placeholder={localStorage.getItem('ipconfig')===null? "digite o ip do seu robo": localStorage.getItem('ipconfig')} 
           value={ipValue} 
           onChange={(e)=>changeInput(e)}/>
-           <button className="buttonConfig" type="submit">Salvar IP</button>
+           <button className="buttonConfig" type="submit">Salvar Novo IP</button>
       </form>
       <form className="formConfig" onSubmit={(e)=>{salvarTag(e)}}>
       <input  className="inputConfig" ref={inputref2} 

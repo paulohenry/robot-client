@@ -21,7 +21,7 @@ const Tensor_Vision=(props)=> {
   return(
        <div className="container-all">
           <aside className="menu-vision">
-            <Link className="voltar-vision" to="/">
+            <Link className="voltar-vision" to="/home">
                <FaArrowAltCircleLeft size={25}/>
             </Link> 
             <div 

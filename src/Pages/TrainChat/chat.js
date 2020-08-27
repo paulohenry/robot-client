@@ -26,7 +26,7 @@ function TrainChat () {
   
   return(    
         <div className="layout">            
-              <Link className="voltar" to="/">
+              <Link className="voltar" to="/home">
                <FaArrowAltCircleLeft size={25}/>
               </Link>            
             <aside>

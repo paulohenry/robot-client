@@ -2,7 +2,7 @@ import React,{useEffect,useState,createRef} from 'react';
 import './style.css'
 
 import Checkbox from '@material-ui/core/Checkbox';
-import api from '../../../Services/axios'
+import axios from 'axios'
 
 import { FaTrashAlt, FaRegPlusSquare} from 'react-icons/fa'
 import Loading from '../../loading/loading'
@@ -31,8 +31,16 @@ const Contexto = (props) =>{
    
     setLoading(true)
     try{
-      
-      const resposta = await api.get('list-intents')
+      const ip = JSON.parse(localStorage.getItem('ipconfig'))
+      const {
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id } = JSON.parse(localStorage.getItem('userDatas'))
+      const resposta = await axios.post(`${ip}/list-intents`,{
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id 
+      })
       const newList = formatedList(resposta.data.result.intents)
       if(resposta.data.result.intents.length===0){
           setZerado(true)
@@ -168,7 +176,15 @@ const Contexto = (props) =>{
     }) 
     
     try{
-      const response = await api.post('delete-intent',{
+      const {
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id } = JSON.parse(localStorage.getItem('userDatas'))
+      const ip = JSON.parse(localStorage.getItem('ipconfig'))
+      const response = await axios.post(`${ip}/delete-intent`,{
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id,
         intent:itemPop[0].intent
       })
       console.log(response)

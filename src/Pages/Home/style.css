@@ -1,11 +1,58 @@
-
+.container-home{
+  display:grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+        "headerhome"
+        "contenthome";
+  max-height: 100vh;
+}
+.header-home{
+  display:flex;
+  align-items:center;
+  grid-area: headerhome;
+  height:10vh;
+  width:100vw;
+  background-color:#FFF;
+  box-shadow: 0px 3px rgba(0,0,0,0.1);
+}
+.header-home img{
+  margin:0 2vw 0 2vw;
+  height:8vh;
+  width:8vh;
+  border-radius:50%;
+}
+.header-home p {
+  color:var(--bg-color);
+  font-weight: bold;
+  font-size:18px;
+}
+.header-home p{
+  cursor:default;
+}
+.header-home-sair{
+  color:var(--bg-color);
+  position:absolute;
+  font-size:24px;
+  right:2vw;
+  transition: transform .2s;
+}
+.header-home-sair:hover{
+ cursor: pointer;
+ transform: scale(1.3);
+}
 .conteudo{
+   grid-area: contenthome;
     display:grid;
     grid-template-columns: 50vw 50vw;
-    grid-template-rows: 50vh 50vh;
+    grid-template-rows: 45vh 45vh;
     grid-template-areas: 
           "vision voice"
           "config robot";
+          overflow:hidden;
+          padding:5vh 0 5vh 0;
+          height:90vh;
+          overflow:hidden;
 }
 .text{
   padding: 0;
@@ -14,7 +61,7 @@
 .content-vision{
   display: flex;
   flex-direction: column;
-  font-size: 32px;
+  font-size: 24px;
   text-decoration: none;
   text-align: center;
   display:flex;
@@ -26,7 +73,9 @@
   box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
   cursor:pointer;
   border-style:hidden;
-  margin:5% 3% 3% 25%;
+  height:40vh;
+  width:35vw;
+  margin:0% 3% 0% 25%;
   transition: transform .2s; 
   grid-area:vision;
 }
@@ -40,7 +89,7 @@
 .content-voice{
   display: flex;
   flex-direction: column;
-  font-size: 32px;
+  font-size: 24px;
   text-decoration: none;
   color:var(--bg-color);
   justify-content:center;
@@ -50,9 +99,11 @@
   box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
   cursor:pointer;
   border-style:hidden;
-  margin:5% 25% 3% 3%;
+  margin:0% 25% 0% 3%;
   transition: transform .2s; 
   grid-area:voice;
+  height:40vh;
+  width:35vw;
 }
 
 .content-voice:hover{
@@ -64,7 +115,7 @@
 .content-config{
   display: flex;
   flex-direction: column;
-  font-size: 32px;
+  font-size: 24px;
   text-decoration: none;
   color:var(--bg-color);
   justify-content:center;
@@ -74,9 +125,11 @@
   box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
   cursor:pointer;
   border-style:hidden;
-  margin:3% 3% 5% 25%;
+  margin:0% 3% 0% 25%;
   transition: transform .2s; 
   grid-area:config;
+  height:40vh;
+  width:35vw;
 }
 
 .content-config:hover{
@@ -88,7 +141,7 @@
 .content-robot{
   display: flex;
   flex-direction: column;
-  font-size: 32px;
+  font-size: 24px;
   text-decoration: none;
   color:var(--bg-color);
   display:flex;
@@ -99,9 +152,11 @@
   box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
   cursor:pointer;
   border-style:hidden;
-  margin:3% 25% 5% 3%;
+  margin:0% 25% 0% 3%;
   transition: transform .2s; 
   grid-area:robot;
+  height:40vh;
+  width:35vw;
 }
 
 .content-robot:hover{

@@ -6,7 +6,7 @@ import Modal from 'react-modal'
 import {FaLongArrowAltLeft,FaRegPlusSquare,FaTrashAlt} from 'react-icons/fa'
 import {parseISO, format} from 'date-fns'
 import Dialog from '../../../dialog/dialog'
-import api from '../../../../Services/axios'
+import axios from 'axios'
 
 
 Modal.setAppElement(document.getElementById('root'))
@@ -89,9 +89,17 @@ const removeExample = async()=>{
       handleAlert('Ação não permitida','Você pode deletar apenas um item por vez')
     }else{
       try{
-        const result = await api.post('delete-example',{
-        intent:intent,
-        text:text
+        const {
+          ibm_api_key, 
+          ibm_url ,
+          ibm_skill_id } = JSON.parse(localStorage.getItem('userDatas'))
+        const ip = JSON.parse(localStorage.getItem('ipconfig'))
+        const result = await axios.post(`${ip}/delete-example`,{
+          ibm_api_key, 
+          ibm_url ,
+          ibm_skill_id,
+          intent:intent,
+          text:text
       })
       setListArray(newArray)
       handleAlert('Notificação de sucesso','Deletado com sucesso')
@@ -162,9 +170,17 @@ const removeExample = async()=>{
   const handleCreateExample = async(e)=>{
     e.preventDefault()
      try{
-       const response = await api.post('create-example',{
-         intent:intent,
-         text:addExample
+       const {
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id} = JSON.parse(localStorage.getItem('userDatas'))
+       const ip = JSON.parse(localStorage.getItem('ipconfig'))
+       const response = await axios.post(`${ip}/create-example`,{
+          ibm_api_key, 
+          ibm_url ,
+          ibm_skill_id,
+          intent:intent,
+          text:addExample
        })
        
         const newArray = []        
@@ -202,7 +218,15 @@ const removeExample = async()=>{
       if(props.onData.intent===undefined){           
           
           try{
-          const response=await api.post('create-intent',{
+            const {
+              ibm_api_key, 
+              ibm_url ,
+              ibm_skill_id } = JSON.parse(localStorage.getItem('userDatas'))
+            const ip = JSON.parse(localStorage.getItem('ipconfig'))
+            const response=await axios.post(`${ip}/create-intent`,{
+            ibm_api_key, 
+            ibm_url ,
+            ibm_skill_id,
             intent:intent,
             description:description,            
           })

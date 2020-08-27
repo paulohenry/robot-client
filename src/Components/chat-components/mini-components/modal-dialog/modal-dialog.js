@@ -5,7 +5,7 @@ import {stylesheet} from './stylesheet'
 import {FaLongArrowAltLeft,FaRegPlusSquare,FaTrashAlt} from 'react-icons/fa'
 import Modal from 'react-modal'
 import Dialog from '../../../dialog/dialog'
-import api from '../../../../Services/axios'
+import axios from 'axios'
 
 Modal.setAppElement(document.getElementById('root'))
 
@@ -35,7 +35,17 @@ const ModalComponent = (props)=>{
 
   const getIntents2 = async()=>{
     try{
-      const response= await api.get('list-intents')
+      const {
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id
+      }= JSON.parse(localStorage.getItem('userDatas'))
+      const ip = JSON.parse(localStorage.getItem('ipconfig'))
+      const response= await axios.post(`${ip}/list-intents`,{
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id
+      })
       if(props.onData1.title){
         setConditions([{intent:props.onData1.conditions}])
         setTitle(props.onData1.title)
@@ -93,7 +103,18 @@ const ModalComponent = (props)=>{
       }
       console.log('request',request)
     try{
-      const response = await api.post('update-dialog', request)
+      const {
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id
+      }= JSON.parse(localStorage.getItem('userDatas'))
+      const ip = JSON.parse(localStorage.getItem('ipconfig'))
+      await axios.post(`${ip}/update-dialog`, {
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id,
+        request
+      })
      handleAlert('Ação de sucesso', 'Atualizado com sucesso')
      
      
@@ -131,7 +152,18 @@ const ModalComponent = (props)=>{
     }
     console.log('request',request)
     try{
-      const response = await api.post('create-dialog', request)
+      const {
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id
+      }= JSON.parse(localStorage.getItem('userDatas'))
+      const ip = JSON.parse(localStorage.getItem('ipconfig'))
+      await axios.post(`${ip}/create-dialog`, {
+        ibm_api_key, 
+        ibm_url ,
+        ibm_skill_id,
+        request
+      })
       handleAlert('Ação de sucesso', 'cadastrado com sucesso')
       
     }catch(err){

@@ -8,8 +8,7 @@ import Loading from '../../loading/loading'
 import * as tf from'@tensorflow/tfjs';
 import * as mobilenetModule from'@tensorflow-models/mobilenet';
 import * as knnClassifier from'@tensorflow-models/knn-classifier/dist/knn-classifier';
-import Reactotron from 'reactotron-react-js'
-
+import axios from 'axios'
 
 let mobilenet=null;
 let classifier=null;
@@ -27,6 +26,7 @@ const PlayGroundComponent = (props)=> {
   const camRef=useRef() 
   const enviarSofia=createRef()
   const camRefTest=createRef()
+  const[loadingSendSofhia,setLoadingSendSofhia]=useState(false)
   const [classesList, setClasses] = useState([])
   const [disabledButton,setDisabledButton]=useState(true)
   const [TestModelCam, setTestModelCam]=useState(false)
@@ -41,40 +41,38 @@ const PlayGroundComponent = (props)=> {
     message3:'',
 
   })
-
+  
   const load_files = async()=>{
+    
     mobilenet = await mobilenetModule.load({
       version:2,
       alpha:1.0
-    })    
-    
-    const dataSetKNN = JSON.parse(localStorage.getItem('dataSetKNN'))
-    if(!dataSetKNN){
-      classifier = knnClassifier.create()
-      localStorage.setItem('dataSetKNN',[JSON.stringify([])])
+    })   
+    const ip = JSON.parse(localStorage.getItem('ipconfig'))
+    const {ra} = JSON.parse(localStorage.getItem('userDatas'))
+    const user = await axios.post(`${ip}/unique-user`,{ra:ra})
+    console.log(user)
+    if(user.data.data[0].knn_model){ 
+      console.log('de certo knn')
+      classifier = knnClassifier.create()         
+      const dataset = fromDatasetObject(JSON.parse(user.data.data[0].knn_model));
+     classifier.setClassifierDataset(dataset);          
     }else{
-       classifier = knnClassifier.create()
-       const datasetJson = localStorage.getItem('dataSetKNN');
-       const datasetObj = JSON.parse(datasetJson);
-      const dataset = fromDatasetObject(datasetObj);
-     classifier.setClassifierDataset(dataset); 
-     console.log(classifier)       
-  }
-    localMemory()
-    setLoading(false)  
-}
-
-  const localMemory = ()=>{
-    const localClassesSave = localStorage.getItem('classesList')     
-    if(!localClassesSave){
-    localStorage.setItem('classesList', [JSON.stringify([])])
+      classifier = knnClassifier.create() 
+    }      
+    if(user.data.data[0].dataset_model){ 
+      console.log('de certo dataset images')    
+       setClasses(JSON.parse(user.data.data[0].dataset_model))  
      }else{
-       const local2= JSON.parse(localStorage.getItem('classesList'))
-      setClasses(local2)  
-    }
+      setClasses([])  
+     }
+    setLoading(false)  
   }
+
   
-  useEffect(()=>{load_files()},[])
+  useEffect(()=>{    
+    load_files()},[])
+    
   useEffect(()=>{
     const interval = setInterval(()=>{
       test()
@@ -195,7 +193,7 @@ const PlayGroundComponent = (props)=> {
                })
             )
           }else{
-            
+              
              if(classifier.getNumClasses()>0){
                classifier.clearClass(c_.title)               
              }
@@ -267,7 +265,7 @@ const PlayGroundComponent = (props)=> {
           newList[clique].amostrage.push({screenShot:screenShot_64})
           newList[clique].countAmostrage = newList[clique].amostrage.length
           setClasses(newList)
-          localStorage.setItem('classesList', JSON.stringify(classesList))
+          
          }
         }
       })       
@@ -296,7 +294,7 @@ const PlayGroundComponent = (props)=> {
             newClassesList[index].countAmostrage=newAmostras.length
             
             setClasses(newClassesList)
-            localStorage.setItem('classesList', JSON.stringify(classesList))
+            
     }
     const toDatasetObject = (dataset)=>{
       const result = Object.entries(dataset).map(([classId,value], index) => {
@@ -320,22 +318,27 @@ const PlayGroundComponent = (props)=> {
       return res    
     }
 
-  const enviarParaSofhia = ()=>{
+  const enviarParaSofhia = async()=>{
     if(classesList.length>0){
       if(classesList[0].countAmostrage > 0){
         try{
-          localStorage.setItem('classesList', JSON.stringify(classesList))
-
+          setLoadingSendSofhia(true)
           const dataset = classifier.getClassifierDataset();
-          const datasetOjb = toDatasetObject(dataset);
-          const jsonStr = JSON.stringify(datasetOjb);
-          localStorage.setItem('dataSetKNN', jsonStr);
-          console.log(classifier)      
+          const datasetOjb = toDatasetObject(dataset);   
+          const ip = JSON.parse(localStorage.getItem('ipconfig'))
+          const {ra}=JSON.parse(localStorage.getItem('userDatas'))
+          const updated = await axios.put(`${ip}/update-tensor`, 
+          {
+            ra:ra,
+            knn_model:JSON.stringify(datasetOjb),
+            dataset_model:JSON.stringify(classesList),    
+          })
+          console.log(updated)    
           clearInterval(interval)
           handleAlert('Aviso','Enviado com sucesso')    
           setTestModelCam(false)          
           setPredictClass('')
-
+          setLoadingSendSofhia(false)
         }catch(error){
           console.log(error)
           handleAlert('Aviso','Não foi possivel concluir a açao',
@@ -357,7 +360,7 @@ const PlayGroundComponent = (props)=> {
     const img =  tf.browser.fromPixels(camRefTest.current.video)
     const  xlogits = mobilenet.infer(img,'conv_preds');
     try{
-      const predict1 = await classifier.predictClass(xlogits)
+      const predict1 = await classifier.predictClass(xlogits,30)
       setPredictClass(predict1.label)
       console.log(predict1.label)
     }catch(error){console.log(error)}
@@ -478,6 +481,7 @@ const PlayGroundComponent = (props)=> {
               <button className="add-card" onClick={()=>{addClasse()}}>adicionar classe</button>
             </div>
           <div ref={enviarSofia}className="container-train">
+            {loadingSendSofhia && <Loading/>}
           <button onClick={()=>enviarParaSofhia()}className='enviar-sofia-enable'>
                   Enviar para sofhia
               </button>
