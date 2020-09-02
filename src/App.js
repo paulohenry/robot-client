@@ -4,7 +4,7 @@ import Router from './router'
 
 function App() {   
   return (    
-      <Router/> 
+      <Router style/> 
   )
 }
 export default App;
