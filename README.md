@@ -1,4 +1,4 @@
-[![Contributors][contributors-shield]][contributors-url]
+[Contributors]
 
 this project was make with react.js [Create React App](https://github.com/facebook/create-react-app).
 
