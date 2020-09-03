@@ -31,4 +31,6 @@ This script start the application
 
 ## This application need backend project on the robot-back project 
 
+https://github.com/paulohenry/robot-back
 
+## to connect backend to frontend, follow instructions on the repo above.
