@@ -2,8 +2,9 @@
 
 this project was make with react.js [Create React App](https://github.com/facebook/create-react-app).
   <div align='center'>
-    <img src="./src/Assets/6Front.JPG" width="600" height="300"/>
- 
+    <img src="./src/Assets/6Front.JPG" width="300" height="150"/>
+     <img src="./src/Assets/12Front.JPG" width="300" height="150"/>
+  <img src="./src/Assets/11Front.JPG" width="300" height="150"/>
   </div>
   
   
