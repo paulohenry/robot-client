@@ -27,6 +27,7 @@ This script start the application
 * [Styled-Components](https://styled-components.com/)
 * [Axios](https://github.com/axios/axios)
 * [React](https://react.dev/)
+* [TensorFlow.JS](https://tensorflow.com)
 
 
 ## This application need backend project on the robot-back project 
