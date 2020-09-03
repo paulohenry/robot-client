@@ -28,6 +28,7 @@ This script start the application
 * [Axios](https://github.com/axios/axios)
 * [React](https://react.dev/)
 * [TensorFlow.JS](https://tensorflow.com)
+* [IBM-WATSON](https://tensorflow.com)
 
 
 ## This application need backend project on the robot-back project 
