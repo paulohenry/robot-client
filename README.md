@@ -2,10 +2,14 @@
 
 this project was make with react.js [Create React App](https://github.com/facebook/create-react-app).
   <div align='center'>
-    <img src="/img/screen1.png" width="300" height="500"/>
+    <img src="/src/Assets/screen1.png" width="300" height="500"/>
     <img src="/img/screen2.png" width="300" height="500"/>
     <img src="/img/screen3.png" width="300" height="500"/>
   </div>
+  
+  
+<!-- ABOUT THE PROJECT -->
+  
 ## starting project
 
 In the project directory, you can run:
